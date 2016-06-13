@@ -8,21 +8,18 @@ Make a demo with https://hyperdev.com/?
 - Some kind of throttling (specify which actions do/don't send to the server?)
   We can make it so it only pushes if a slice of the state that needs to be
   persisted has been modified, but that may not be good enough.
-
+- Deal with browsers with no localStorage
 
 API
 
 `persistState` (client, store enhancer)
 - include/exclude webpack style for deciding which parts of the state need to be persisted.
 - URL/port of the back-end.
-- localStorage key (have some obscure default).
-  It will use this key to check to see what's in LocalStorage.
-  This way, it'll know right away if the server fetch is required.
-  The data will be serialized like:
-    {
-      store: {},
-      storeKey: 'abcd1234' (user-specified unique ID)
-    }
+- in localStorage, we may store several different storeKeys; one store under each key.
+  {
+    'redux-server-persist-store-abc': <stringified JSON>,
+    'redux-server-persist-store-def': <other store's JSON>
+  }
 
 
 `hydrateFromServer` (client, action creator)
